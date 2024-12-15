@@ -1,0 +1,17 @@
+This error occurs when using Tailwind CSS with PurgeCSS or similar tools that remove unused CSS.  If you have a class that's conditionally rendered (e.g., based on JavaScript state) and PurgeCSS doesn't detect its usage, it will remove the associated styles, leading to unexpected visual issues. For example:
+
+```html
+<div :class="{ 'hidden': !isVisible }">
+  <p>This text might disappear!</p>
+</div>
+```
+
+```javascript
+data() {
+  return {
+    isVisible: false
+  };
+}
+```
+
+If PurgeCSS runs before the JavaScript sets `isVisible` to `true`, the `hidden` class's styles will be removed, and the text will remain hidden even when it should be visible.
